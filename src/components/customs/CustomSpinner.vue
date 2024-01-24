@@ -42,10 +42,16 @@ export default {
 .spinner {
   position: absolute;
   top: 50%;
-  left: 44%;
+  left: 50%;
   z-index: 1;
   height: 40px;
   width: 40px;
   transform: translate(-50%, -50%);
+}
+@media (max-width: 500px) {
+  /* Styles applied for viewport width up to 767px */
+  .spinner {
+    left: 44%;
+  }
 }
 </style>
