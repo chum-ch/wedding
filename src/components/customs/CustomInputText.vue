@@ -73,6 +73,7 @@ const props = defineProps({
   style: Object,
   styleCustomInput: Boolean,
   hideLabel: Boolean,
+  modelValue: String
 });
 const instance = getCurrentInstance();
 const values = ref("");
@@ -87,12 +88,16 @@ const updateModelValue = (value) => {
   }
   instance.emit("update:modelValue", value);
 };
-watch(() => props.messageError, (newValue) => {
-  if (newValue && !values.value ) {
+watch([() => props.messageError, () => props.modelValue], ([newPropMessageError, newPropModelValue]) => {
+  if (newPropMessageError && !values.value ) {
     pInvalid.value = "p-invalid";
     showError.value = true;
   }
+  if (newPropModelValue) {
+    values.value = newPropModelValue;
+  }
 })
+
 
 </script>
 
