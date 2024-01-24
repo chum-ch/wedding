@@ -51,6 +51,8 @@
             ? 'pi pi-images'
             : cloudIcon
             ? 'pi pi-cloud-upload'
+            : fileIcon
+            ? 'pi pi-file'
             : ''
         "
       />
@@ -79,6 +81,7 @@ export default {
     label: String,
     checkIcon: Boolean,
     userIcon: Boolean,
+    fileIcon: Boolean,
     searchIcon: Boolean,
     spinnerIcon: Boolean,
     rightIcon: Boolean,

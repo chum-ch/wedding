@@ -70,17 +70,11 @@ const disabledEdit = ref(true);
 const isGo = ref(true);
 const menuItems = ref([
   {
-    label: "ឯកសារ",
-    icon: "pi pi-file",
-    items: [
-      {
-        label: "ផ្ទុកឯកសារ",
-        icon: "pi pi-cloud-upload",
-        command: async () => {
-          instance.emit("uploadedExcelFile");
-        },
-      },
-    ],
+    label: "ផ្ទុកឯកសារ",
+    icon: "pi pi-cloud-upload",
+    command: async () => {
+      instance.emit("uploadedExcelFile");
+    },
   },
 ]);
 // Function
@@ -149,26 +143,6 @@ const openDialogVoice = () => {
   toChildCustomVoiceSearch.value.openDialogVoice();
 };
 // Watcher function
-watch(
-  () => props.tableData,
-  (data) => {
-    for (const obj of menuItems.value) {
-      obj.items.forEach((item) => {
-        const hasPropertyDisabled = Object.prototype.hasOwnProperty.call(
-          item,
-          "disabled"
-        );
-        if (hasPropertyDisabled) {
-          item.disabled = true;
-          if (data.length > 0) {
-            item.disabled = false;
-          }
-        }
-        return item;
-      });
-    }
-  }
-);
 initFilters();
 defineExpose({
   unSelectedAllRows,
