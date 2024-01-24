@@ -83,7 +83,7 @@ defineExpose({
       <template #bodyDialog>
         <div class="load-wrapp">
           <div class="load-3 flex">
-            <p class="mr-2">{{ listening??'Listening' }}</p>
+            <p class="mr-2 text-sm">{{ listening??'Listening' }}</p>
             <div class="mt-4 line"></div>
             <div class="mt-4 line"></div>
             <div class="mt-4 line"></div>

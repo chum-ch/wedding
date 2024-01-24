@@ -9,7 +9,7 @@
       :breakpoints="{ '960px': '75vw', '641px': '92vw' }"
     >
       <div class="text-center" v-if="isDelete">
-        <span class="mr-1 font-bold">Delete</span>
+        <span class="mr-1 font-bold">ការលុបចោល</span>
         <i class="pi pi-exclamation-triangle text-center text-red-500 font-bold"></i>
       </div>
       <slot name="bodyDialog"> </slot>
@@ -18,7 +18,7 @@
         <div class="flex justify-content-end flex-wrap">
           <CustomButton
             @onClick="$emit('onClickCloseDialog')"
-            :label="'Cancel'"
+            :label="'បោះបង់'"
             class="mr-2"
             :outlined="true"
             :secondary="secondary"

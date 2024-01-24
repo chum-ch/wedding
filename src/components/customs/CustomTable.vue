@@ -70,26 +70,11 @@ const disabledEdit = ref(true);
 const isGo = ref(true);
 const menuItems = ref([
   {
-    label: "File",
+    label: "ឯកសារ",
     icon: "pi pi-file",
     items: [
       {
-        label: "Download",
-        disabled: true,
-        icon: "pi pi-download",
-        command: async () => {
-          instance.emit("downloadAllDataInTable");
-        },
-      },
-      {
-        label: "Get template",
-        icon: "pi pi-cloud-download",
-        command: async () => {
-          instance.emit("downloadTemplateExcel");
-        },
-      },
-      {
-        label: "Upload",
+        label: "ផ្ទុកឯកសារ",
         icon: "pi pi-cloud-upload",
         command: async () => {
           instance.emit("uploadedExcelFile");
@@ -167,7 +152,6 @@ const openDialogVoice = () => {
 watch(
   () => props.tableData,
   (data) => {
-    console.log(data);
     for (const obj of menuItems.value) {
       obj.items.forEach((item) => {
         const hasPropertyDisabled = Object.prototype.hasOwnProperty.call(
@@ -199,7 +183,7 @@ defineExpose({
       <div class="flex">
         <CustomInputText
           v-model="filters['global'].value"
-          placeholder="Search ..."
+          placeholder="ស្វែរក ..."
           :showIcon="true"
           :leftIcon="true"
           :searchIcon="true"
@@ -207,26 +191,27 @@ defineExpose({
         />
         <div class="flex flex-wrap justify-content-center m-2">
           <div
-          @click="openDialogVoice"
+            @click="openDialogVoice"
             class="border-circle w-2rem h-2rem bg-primary cursor-pointer text-white font-bold flex align-items-center justify-content-center"
           >
             <i class="pi pi-microphone" />
             <CustomVoiceSearch
               ref="toChildCustomVoiceSearch"
               @update:voiceInput="getTextFromVoice"
+              :listening="'កំពុងស្ដាប់'"
             />
           </div>
         </div>
       </div>
       <div class="flex flex-wrap">
         <CustomButton
-          :label="'Add'"
+          :label="'បន្ថែម'"
           class="mr-2 mb-2"
           @onClick="($event) => $emit('onClickCreate', $event)"
           v-if="!isHideAddBtn"
         />
         <CustomButton
-          :label="'Edit'"
+          :label="'កែសម្រួល'"
           class="mr-2"
           @onClick="() => $emit('onClickEdit', selection)"
           :outlined="true"
@@ -234,7 +219,7 @@ defineExpose({
           v-if="!isHideEditBtn"
         />
         <CustomButton
-          :label="'Delete'"
+          :label="'លុប'"
           class="mr-2"
           @onClick="() => $emit('onClickDelete', selection)"
           :danger="true"
@@ -242,6 +227,7 @@ defineExpose({
           :disabled="disabledDelete"
           v-if="!isHideDeleteBtn"
         />
+        <CustomTieredMenu :menuItems="menuItems" v-if="isShowFileMenu" />
       </div>
     </div>
     <DataTable
@@ -264,15 +250,15 @@ defineExpose({
       tableStyle="min-width: 50rem"
       paginator
       paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
-      currentPageReportTemplate="Show from {first} to {last} of {totalRecords}"
+      currentPageReportTemplate="បង្ហាញពី {first} ទៅ {last} នៃ {totalRecords} ចំនួនសរុប"
     >
       <template #empty>
         <div v-if="tableData.length !== 0" class="">
-          The
+          ពាក្យ
           <span class="text-red-500 font-bold">
             {{ filters["global"].value }}</span
           >
-          is not found! 🥺
+          រកមិនឃើញទេ 🥺។
         </div>
       </template>
       <Column :selectionMode="selectionMode" headerStyle="width: 3rem"></Column>
