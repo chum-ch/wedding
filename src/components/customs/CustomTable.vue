@@ -1,174 +1,201 @@
 <script setup>
-import { onMounted, reactive, ref, inject, getCurrentInstance, watch } from 'vue'
-import DataTable from 'primevue/datatable'
-import Column from 'primevue/column'
-import { FilterMatchMode, FilterOperator } from 'primevue/api'
-const instance = getCurrentInstance()
+import {
+  onMounted,
+  reactive,
+  ref,
+  inject,
+  getCurrentInstance,
+  watch,
+} from "vue";
+import DataTable from "primevue/datatable";
+import Column from "primevue/column";
+import { FilterMatchMode, FilterOperator } from "primevue/api";
+const instance = getCurrentInstance();
 
 const props = defineProps({
   tableData: {
     type: Array,
-    default: () => []
+    default: () => [],
   },
   columns: {
     type: Array,
-    default: () => []
+    default: () => [],
   },
   selectionMode: {
     type: String,
-    default: () => 'multiple'
+    default: () => "multiple",
   },
   isHideAddBtn: {
     type: Boolean,
-    required: false
+    required: false,
   },
   isHideEditBtn: {
     type: Boolean,
-    required: false
+    required: false,
   },
   isHideDeleteBtn: {
     type: Boolean,
-    required: false
+    required: false,
   },
   isShowFileMenu: {
     type: Boolean,
-    required: false
+    required: false,
   },
   hasImage: {
     type: Boolean,
-    default: () => true
-  }
-})
+    default: () => true,
+  },
+});
 defineEmits([
-  'onClickCreate',
-  'onClickEdit',
-  'onClickDelete',
-  'update:selection',
-  'onClickDetails',
-  'downloadAllDataInTable',
-  'downloadTemplateExcel',
-  'uploadedExcelFile'
-])
+  "onClickCreate",
+  "onClickEdit",
+  "onClickDelete",
+  "update:selection",
+  "onClickDetails",
+  "downloadAllDataInTable",
+  "downloadTemplateExcel",
+  "uploadedExcelFile",
+]);
 onMounted(() => {
   // initFilters()
-})
+});
 // Variables
-const selection = ref([])
-const globalFilterFields = ref([])
-const filters = ref()
+const selection = ref([]);
+const globalFilterFields = ref([]);
+const filters = ref();
+const toChildCustomVoiceSearch = ref();
 // Button
-const disabledDelete = ref(true)
-const disabledEdit = ref(true)
-const isGo = ref(true)
+const disabledDelete = ref(true);
+const disabledEdit = ref(true);
+const isGo = ref(true);
 const menuItems = ref([
   {
-    label: 'File',
-    icon: 'pi pi-file',
+    label: "File",
+    icon: "pi pi-file",
     items: [
       {
-        label: 'Download',
+        label: "Download",
         disabled: true,
-        icon: 'pi pi-download',
+        icon: "pi pi-download",
         command: async () => {
-          instance.emit('downloadAllDataInTable')
-        }
+          instance.emit("downloadAllDataInTable");
+        },
       },
       {
-        label: 'Get template',
-        icon: 'pi pi-cloud-download',
+        label: "Get template",
+        icon: "pi pi-cloud-download",
         command: async () => {
-          instance.emit('downloadTemplateExcel')
-        }
+          instance.emit("downloadTemplateExcel");
+        },
       },
       {
-        label: 'Upload',
-        icon: 'pi pi-cloud-upload',
+        label: "Upload",
+        icon: "pi pi-cloud-upload",
         command: async () => {
-          instance.emit('uploadedExcelFile')
-        }
-      }
-    ]
-  }
-])
+          instance.emit("uploadedExcelFile");
+        },
+      },
+    ],
+  },
+]);
 // Function
 const onRowClick = (data) => {
   if (isGo.value) {
-    instance.emit('onClickDetails', [data.data])
+    instance.emit("onClickDetails", [data.data]);
   } else {
-    isGo.value = true
+    isGo.value = true;
   }
-}
+};
 const selectedRow = () => {
-  emitSelectedRowData('selectRow')
-}
+  emitSelectedRowData("selectRow");
+};
 const unSelectedRow = () => {
-  isGo.value = false
-  emitSelectedRowData('unSelectRow')
-}
+  isGo.value = false;
+  emitSelectedRowData("unSelectRow");
+};
 const unSelectedAllRows = () => {
-  disabledEdit.value = true
-  disabledDelete.value = true
-  selection.value = []
-  emitSelectedRowData('unSelectAllRow')
-}
+  disabledEdit.value = true;
+  disabledDelete.value = true;
+  selection.value = [];
+  emitSelectedRowData("unSelectAllRow");
+};
 const selectedAllRows = (event) => {
-  selection.value = event.data
-  emitSelectedRowData('selectAllRow')
-}
+  selection.value = event.data;
+  emitSelectedRowData("selectAllRow");
+};
 const emitSelectedRowData = (checked) => {
-  if (checked === 'selectRow' || checked === 'unSelectRow' || checked === 'selectAllRow') {
-    instance.emit('update:selection', selection.value)
-    disabledAction(selection.value)
+  if (
+    checked === "selectRow" ||
+    checked === "unSelectRow" ||
+    checked === "selectAllRow"
+  ) {
+    instance.emit("update:selection", selection.value);
+    disabledAction(selection.value);
   } else {
-    instance.emit('update:selection', [])
+    instance.emit("update:selection", []);
   }
-}
+};
 const disabledAction = (data) => {
   if (data.length === 0) {
-    disabledDelete.value = true
-    disabledEdit.value = true
+    disabledDelete.value = true;
+    disabledEdit.value = true;
   } else {
-    disabledDelete.value = false
+    disabledDelete.value = false;
     if (data.length > 1) {
-      disabledEdit.value = true
+      disabledEdit.value = true;
     } else {
-      disabledEdit.value = false
+      disabledEdit.value = false;
     }
   }
-}
+};
 const initFilters = () => {
-  globalFilterFields.value = props.columns.map((item) => item.field)
+  globalFilterFields.value = props.columns.map((item) => item.field);
   filters.value = {
-    global: { value: null, matchMode: FilterMatchMode.CONTAINS }
-  }
-}
+    global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+  };
+};
+const getTextFromVoice = (text) => {
+  filters.value = {
+    global: { value: text, matchMode: FilterMatchMode.CONTAINS },
+  };
+  console.log(filters.value);
+};
+const openDialogVoice = () => {
+  toChildCustomVoiceSearch.value.openDialogVoice();
+};
 // Watcher function
 watch(
   () => props.tableData,
   (data) => {
+    console.log(data);
     for (const obj of menuItems.value) {
       obj.items.forEach((item) => {
-        const hasPropertyDisabled = Object.prototype.hasOwnProperty.call(item, 'disabled')
+        const hasPropertyDisabled = Object.prototype.hasOwnProperty.call(
+          item,
+          "disabled"
+        );
         if (hasPropertyDisabled) {
-          item.disabled = true
+          item.disabled = true;
           if (data.length > 0) {
-            item.disabled = false
+            item.disabled = false;
           }
         }
-        return item
-      })
+        return item;
+      });
     }
   }
-)
-initFilters()
+);
+initFilters();
 defineExpose({
-  unSelectedAllRows
-})
+  unSelectedAllRows,
+});
 </script>
 
 <template>
   <div class="table mt-2">
-    <div class="flex justify-content-between sm:flex-row-reverse flex-wrap mx-2">
+    <div
+      class="flex justify-content-between sm:flex-row-reverse flex-wrap mx-2"
+    >
       <div class="flex">
         <CustomInputText
           v-model="filters['global'].value"
@@ -180,9 +207,14 @@ defineExpose({
         />
         <div class="flex flex-wrap justify-content-center m-2">
           <div
-            class="border-circle w-2rem h-2rem bg-primary-400 cursor-pointer text-white font-bold flex align-items-center justify-content-center"
+          @click="openDialogVoice"
+            class="border-circle w-2rem h-2rem bg-primary cursor-pointer text-white font-bold flex align-items-center justify-content-center"
           >
             <i class="pi pi-microphone" />
+            <CustomVoiceSearch
+              ref="toChildCustomVoiceSearch"
+              @update:voiceInput="getTextFromVoice"
+            />
           </div>
         </div>
       </div>
@@ -210,7 +242,6 @@ defineExpose({
           :disabled="disabledDelete"
           v-if="!isHideDeleteBtn"
         />
-        <CustomTieredMenu :menuItems="menuItems" v-if="isShowFileMenu" />
       </div>
     </div>
     <DataTable
@@ -238,8 +269,10 @@ defineExpose({
       <template #empty>
         <div v-if="tableData.length !== 0" class="">
           The
-          <span class="text-red-500 font-bold"> {{ filters['global'].value }}</span> is not found!
-          🥺
+          <span class="text-red-500 font-bold">
+            {{ filters["global"].value }}</span
+          >
+          is not found! 🥺
         </div>
       </template>
       <Column :selectionMode="selectionMode" headerStyle="width: 3rem"></Column>
