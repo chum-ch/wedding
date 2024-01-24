@@ -2,7 +2,7 @@
   <div class="about" v-if="isLoading" >
     <div id="preloader" class="preloader">
       <div class="spinner">
-        <PrimeVueProgressSpinner/>
+        <PrimeVueProgressSpinner />
       </div>
     </div>
   </div>
@@ -42,7 +42,7 @@ export default {
 .spinner {
   position: absolute;
   top: 50%;
-  left: 50%;
+  left: 44%;
   z-index: 1;
   height: 40px;
   width: 40px;
