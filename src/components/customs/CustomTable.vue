@@ -224,7 +224,7 @@ defineExpose({
       tableStyle="min-width: 50rem"
       paginator
       paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
-      currentPageReportTemplate="បង្ហាញពី {first} ទៅ {last} នៃ {totalRecords} ចំនួនសរុប"
+      currentPageReportTemplate="ពី {first} ទៅ {last} ចំនួនសរុប {totalRecords}"
     >
       <template #empty>
         <div v-if="tableData.length !== 0" class="">
