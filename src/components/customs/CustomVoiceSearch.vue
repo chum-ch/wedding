@@ -167,8 +167,8 @@ body {
 
 .line {
   display: inline-block;
-  width: 10px;
-  height: 10px;
+  width: 9px;
+  height: 9px;
   margin-right: 4px;
   border-radius: 15px;
   background-color: var(--primary-color);

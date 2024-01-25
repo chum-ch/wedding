@@ -51,6 +51,7 @@ export default {
 @media (max-width: 500px) {
   /* Styles applied for viewport width up to 767px */
   .spinner {
+    top: 45%;
     left: 44%;
   }
 }

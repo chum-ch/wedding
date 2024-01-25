@@ -157,7 +157,7 @@ defineExpose({
       <div class="flex">
         <CustomInputText
           v-model="filters['global'].value"
-          placeholder="ស្វែរក ..."
+          placeholder="ស្វែងរក ..."
           :showIcon="true"
           :leftIcon="true"
           :searchIcon="true"

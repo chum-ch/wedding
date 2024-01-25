@@ -88,7 +88,7 @@ const updateModelValue = (value) => {
   }
   instance.emit("update:modelValue", value);
 };
-watch([() => props.messageError, () => props.modelValue], ([newPropMessageError, newPropModelValue]) => {
+watch([() => props.messageError, () => props.modelValue, () => values], ([newPropMessageError, newPropModelValue, newPropValue]) => {
   if (newPropMessageError && !values.value ) {
     pInvalid.value = "p-invalid";
     showError.value = true;

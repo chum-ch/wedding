@@ -1,6 +1,7 @@
 <script setup>
 import { RouterLink, RouterView } from "vue-router";
 import CustomSpinner from './components/customs/CustomSpinner.vue'
+import WeddingForm from './views/WeddingForm.vue'
 import {
   onMounted,
   reactive,
@@ -21,13 +22,14 @@ const $api = inject("$api");
 const tableDataWedding = ref([]);
 const selectedWedding = ref([]);
 const refToChildCustomDialogDeleteWedding = ref();
+const refToChildWeddingForm = ref();
 const columnsRoom = ref([
   {
-    field: "ឈ្មោះ",
+    field: "Name",
     header: "ឈ្មោះ",
   },
   {
-    field: "ភូមិ",
+    field: "Village",
     header: "ភូមិ",
   },
 ]);
@@ -98,6 +100,9 @@ const openDialogMessage = () => {
 const closeDialogMessage = () => {
   dialogMessage.value.closeDialog()
 }
+const createWedding = () => {
+  refToChildWeddingForm.value.openDialogWeddingForm()
+}
 onMounted( async() => {
   try {
     axios.interceptors.request.use((config) => {
@@ -157,10 +162,13 @@ onMounted( async() => {
     :tableData="tableDataWedding"
     :columns="columnsRoom"
     :isShowFileMenu="true"
+    :isHideEditBtn="true"
     @uploadedExcelFile="openFileBrowser"
     @update:selection="getSelectionWedding"
     @onClickDelete="openDialogDeleteWedding"
+    @onClickCreate="createWedding"
   />
+
   <!-- Dialog delete room  -->
   <CustomDialog
     ref="refToChildCustomDialogDeleteWedding"
@@ -193,7 +201,10 @@ onMounted( async() => {
       </p>
     </template>
   </CustomDialog>
+  <!-- Child room form  -->
+  <WeddingForm ref="refToChildWeddingForm" @update:wedding="getListWedding" />
   <!-- <RouterView /> -->
+
 </template>
 
 <style>
