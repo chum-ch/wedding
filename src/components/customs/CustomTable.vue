@@ -137,7 +137,6 @@ const getTextFromVoice = (text) => {
   filters.value = {
     global: { value: text, matchMode: FilterMatchMode.CONTAINS },
   };
-  console.log(filters.value);
 };
 const openDialogVoice = () => {
   toChildCustomVoiceSearch.value.openDialogVoice();

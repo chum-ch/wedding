@@ -29,6 +29,7 @@ import CustomDialog from './components/customs/CustomDialog.vue'
 import CustomTieredMenu from './components/customs/CustomTieredMenu.vue';
 import CustomProgressBar from './components/customs/CustomProgressBar.vue';
 import CustomUploadFile from './components/customs/CustomUploadFile.vue';
+import CustomCard from './components/customs/CustomCard.vue';
 const app = createApp(App)
 // Config Axios
 const $api = API(axios)
@@ -54,6 +55,7 @@ app.component('CustomDialog', CustomDialog)
 app.component('CustomTieredMenu', CustomTieredMenu);
 app.component('CustomProgressBar', CustomProgressBar);
 app.component('CustomUploadFile', CustomUploadFile);
+app.component('CustomCard', CustomCard);
 app.use(router)
 app.use(PrimeVue);
 app.provide('$api', $api)

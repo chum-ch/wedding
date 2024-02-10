@@ -61,4 +61,9 @@ defineExpose({});
 .p-tieredmenu .p-menuitem > .p-menuitem-content .p-menuitem-link {
   padding: 0.6rem 1.25rem;
 }
+@media (max-width: 600px) {
+  .menu-bar {
+    width: 50px;
+  }
+}
 </style>
