@@ -32,6 +32,10 @@ const columnsRoom = ref([
     field: "Village",
     header: "ភូមិ",
   },
+  {
+    field: "Money",
+    header: "ថវិកា",
+  },
 ]);
 const openFileBrowser = () => {
   refToChildCustomFileUpload.value.openFileBrowser();

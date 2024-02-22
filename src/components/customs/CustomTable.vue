@@ -218,7 +218,7 @@ defineExpose({
       :globalFilterFields="globalFilterFields"
       :value="tableData"
       scrollable
-      scrollHeight="450px"
+      scrollHeight="600px"
       class="p-datatable-sm mt-2 z-0"
       tableStyle="min-width: 50rem"
       paginator

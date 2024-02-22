@@ -19,10 +19,12 @@ const dialogWeddingForm = ref()
 const weddingForm = ref({
   Name: '',
   Village: '',
+  Money: '',
 })
 // Error message
 const message = ref({
   Name: '',
+  Money: '',
   Village: '',
 })
 const openDialogWeddingForm = () => {
@@ -48,6 +50,11 @@ const createWeddingInfo = async () => {
         message.value.Village = "ទាមទារបញ្ជូលភូមិ"
       } else {
         message.value.Village = ''
+      }
+      if (!weddingForm.value.Money) {
+        message.value.Money = "ទាមទារបញ្ជូលថវិកា"
+      } else {
+        message.value.Money = ''
       }
     }
   } catch (error) {
@@ -79,6 +86,14 @@ defineExpose({ openDialogWeddingForm })
           v-model="weddingForm.Name"
           :required="true"
           :messageError="message.Name"
+          class=""
+        />
+        <CustomInputText
+          :placeholder="'.......'"
+          :label="'ថវិកា'"
+          v-model="weddingForm.Money"
+          :required="true"
+          :messageError="message.Money"
           class=""
         />
         <CustomInputText

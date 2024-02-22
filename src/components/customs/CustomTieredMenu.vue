@@ -63,7 +63,8 @@ defineExpose({});
 }
 @media (max-width: 600px) {
   .menu-bar {
-    width: 50px;
+    width: 10%;
+    margin: 0;
   }
 }
 </style>
